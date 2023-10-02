@@ -5,7 +5,6 @@
 #include "../png_util/crc.h"
 #include "../png_util/zutil.h"
 
-//typedef long long U64;
 
 bool check_PNG_header(char* buf, long len);
 bool write_PNG_header(char* buf, long len);
@@ -16,19 +15,18 @@ int get_PNG_width(char* buf, long len);
 int get_PNG_height(char* buf, long len);
 
 bool check_CRC_error(char* buf, long len);
-int get_chunk_data_length(char* buf, char* chunk, long len);
+unsigned get_chunk_data_length(char* buf, char* chunk, long len);
 char* get_chunk_pointer(char*buf, long len, unsigned chunk_type);
 unsigned get_CRC(char* buf, char* chunk, long len);
 
 
 int main(int argc, char* argv[]) {
-//    bool dbg = false;
-
 	if (argc < 2) {
         printf("Total of 2 args required (1 dir name)\n");
         return -1;
     }
 
+	unsigned PNG_count = 0;
 	char* data_arr[argc];
 	U64 data_len_arr[argc];
 	for (int i = 0; i < argc; i++) {
@@ -38,23 +36,22 @@ int main(int argc, char* argv[]) {
 
 	unsigned all_height = 0;
 	unsigned all_width = 0;
-	U64 decompressed_len = 0;
-	U64 compressed_len = 0;
-	char* decompressed_data = NULL;
-	char* compressed_data = NULL;
+    U64 all_len = 0;
+    char* all_buf;
 
-	U64 all_len = 0;
-	char* all_buf;
+	U64 decompressed_len = 0;
+	char* decompressed_data = NULL;
+
+	U64 compressed_len = 0;
+	char* compressed_data = NULL;
 
 	for (int i = 1; i < argc; i++) {
 		char* file_name = argv[i];
     	FILE *file = fopen(file_name, "r");
     	if (file == NULL) {
-        	printf("No PNG file found\n");
 			data_arr[i] = NULL;
     		continue;
 		}
-		printf("Opened filed: %s\n", file_name);
 
     	char* buffer;
     	long file_length;
@@ -69,7 +66,7 @@ int main(int argc, char* argv[]) {
     	fseek(file, 0, SEEK_SET);
 
     	buffer = (char *) malloc((file_length + 1)*sizeof(char));
-    	if (buffer == NULL) { printf("Malloc Error\n"); return -1; }
+    	if (buffer == NULL) { printf("Malloc Error\n"); fclose(file); return -1; }
     	buffer[file_length] = '\0';
 
     	bytes_read = fread(buffer, 1, file_length, file);
@@ -104,41 +101,39 @@ int main(int argc, char* argv[]) {
 			fclose(file); 
 		   	continue;
 		}
-		printf("Buff: %p\n", buffer);
-		printf("IDAT: %p\n", p_IDAT);
-		printf("W: %d\n", get_PNG_width(buffer, file_length));
-		printf("H: %d\n", get_PNG_height(buffer, file_length));
-	//	int mem_def(U8 *dest, U64 *dest_len, U8 *source,  U64 source_len, int level)	
-	//	int mem_inf(U8 *dest, U64 *dest_len, U8 *source,  U64 source_len)
+		
 		U64 IDAT_data_len = get_chunk_data_length(buffer, p_IDAT, file_length);
-		printf("Data Len: %lu\n", IDAT_data_len);
-		printf("Chunk Len: %d\n", CHUNK);	
 		data_arr[i] = (char*)malloc((height_PNG*(width_PNG*4 + 1))*sizeof(char));
 		
-		printf("Data buf: %p\n", data_arr[i]);
-		printf("Length p: %p\n", &data_len_arr[i]);
-        printf("p_IDAT: %p\n", p_IDAT);
-        printf("Data len: %ld\n", IDAT_data_len);
-
 		int decompress_res = mem_inf((U8*)data_arr[i], &data_len_arr[i],
-									 (U8*)p_IDAT+8, IDAT_data_len);
+									 (U8*)(p_IDAT+8), IDAT_data_len);
 		
 		if (decompress_res != Z_OK) {
 			printf("Decompression failed");
+			free(data_arr[i]);
+			data_arr[i] = NULL;
+			data_len_arr[i] = 0;
 			free(buffer);
 			fclose(file);
 			continue;
 		}
-		printf("Before Free: %d\n", i);		
+
 		free(buffer);
 		fclose(file);
-		printf("After Free: %d\n", i);
+		++PNG_count;
+	}
 
+	if (!PNG_count) {
+		for (int i = 1; i < argc; i++)
+        	if (data_arr[i])
+            	free(data_arr[i]);
+		printf("No PNG file found\n");
+		return 0;
 	}
 
 
 	for (int i = 0; i < argc; i++)
-		if (data_len_arr[i])
+		if (data_len_arr[i] && data_arr[i])
 				decompressed_len += data_len_arr[i];
 
 
@@ -147,21 +142,18 @@ int main(int argc, char* argv[]) {
 	decompressed_data[decompressed_len] = '\0';
 	
 	unsigned index = 0;
-	for(int i = 0; i < argc; i++){
-		if(data_arr[i] == NULL){
+	for (int i = 0; i < argc; i++) {
+		if (data_arr[i] == NULL)
 			continue;
-		}
-		for(U64 j = 0; j < data_len_arr[i]; j++){
+		for (U64 j = 0; j < data_len_arr[i]; j++) {
 			decompressed_data[index] = data_arr[i][j];
 			++index;
 		}	
 	}
 	
-	printf("Decompressed length:%lu\n", decompressed_len);
 	compressed_data = (char*)malloc(decompressed_len * sizeof(char));
-	//int mem_def(U8 *dest, U64 *dest_len, U8 *source,  U64 source_len, int level)
 	int compressed_status = mem_def((U8*)compressed_data, &compressed_len,
-				(U8*)decompressed_data, decompressed_len, 6);
+									(U8*)decompressed_data, decompressed_len, 6);
 	if (compressed_status != Z_OK) {
 		printf("Compression Failed: %d\n", compressed_status);
 		return -1;
@@ -185,17 +177,10 @@ int main(int argc, char* argv[]) {
 	unsigned PNG_CRC_IDAT;
 	unsigned PNG_CRC_IEND;
 	
-	printf("Compressed length: %lu\n", compressed_len);
-
 	write_PNG_header(all_buf, all_len);
 	write_PNG_width(all_buf, all_width, all_len);
 	write_PNG_height(all_buf, all_height, all_len);
-
 	write_PNG_data_IHDR(all_buf, all_len);
-
-
-	printf("Get W:  %d\n", get_PNG_width(all_buf, all_len));
-    printf("Get H:  %d\n", get_PNG_height(all_buf, all_len));
 
 	*(unsigned*)((char*)all_buf + 12) = *(unsigned*)PNG_type_IHDR;
 	*(unsigned*)((char*)all_buf + 37) = *(unsigned*)PNG_type_IDAT;
@@ -204,7 +189,7 @@ int main(int argc, char* argv[]) {
 
 	for (U64 i = 0; i < compressed_len; i++)
 			all_buf[i + 41] = compressed_data[i];
-//	*(unsigned*)&all_total_buf[8] = (unsigned)htonl(0xCCCC);
+
 	*(unsigned*)((char*)all_buf + 8) = htonl(PNG_length_IHDR);
 	*(unsigned*)((char*)all_buf + 33) = htonl(PNG_length_IDAT);
 	*(unsigned*)((char*)all_buf + all_len - 12)
@@ -218,23 +203,22 @@ int main(int argc, char* argv[]) {
     *(unsigned*)((char*)all_buf + 41 + compressed_len) = PNG_CRC_IDAT;
     *(unsigned*)((char*)all_buf + all_len - 4) = PNG_CRC_IEND;
 
-	printf("W*H: %d*%d\n", all_width, all_height);
-	printf("Get W:  %d\n", get_PNG_width(all_buf, all_len));
-	printf("Get H:  %d\n", get_PNG_height(all_buf, all_len));
 	FILE *new_file = fopen("all.png", "wb");
 	if (!new_file) { printf("New file creation Err\n"); return -1; }
 
-//	fprintf(new_file, "%s", all_total_buf);
 	for (unsigned i = 0; i < all_len; i++)
 			fputc(all_buf[i], new_file);
 	fclose(new_file);
 
 
 	// clean up
-	printf("CLEAN UP\n");
-//	for (int i = 1; i < argc; i++)
-//		if (data_arr[i])
-//			free(data_arr[i]);
+	free(decompressed_data);
+	free(compressed_data);
+	free(all_buf);
+
+	for (int i = 1; i < argc; i++)
+		if (data_arr[i])
+			free(data_arr[i]);
 
 	return 0;
 }
@@ -250,7 +234,7 @@ bool check_PNG_header(char* buf, long int len) {
     return true;
 }
 
-int get_chunk_data_length(char* buf, char* chunk,  long len) {
+unsigned get_chunk_data_length(char* buf, char* chunk,  long len) {
     if (chunk - buf + 4 >= len || chunk == NULL || buf == NULL) {
         return -1;
     }

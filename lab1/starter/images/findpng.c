@@ -1,9 +1,10 @@
 //#include <arpa/inet.h>
-#include <dirent.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include <dirent.h>
+
 unsigned find_PNG(const char* dir_path);
 bool check_PNG_header(char* buf, long int len);
 bool valid_directory(const char* dir_path);
@@ -109,7 +110,13 @@ unsigned find_PNG(const char* dir_path) {
 			}
 			buffer[file_length] = '\0';
       		bytes_read = fread(buffer, 1, file_length, file);
-			
+			if ((long)bytes_read > file_length) {
+					printf("File read length Err\n");
+					free(buffer);
+					free(entry_path);
+					continue;
+			}
+
 			if (check_PNG_header(buffer, file_length)) {
 					printf("file: %s%s\n",dir_path, cur_entry);
 					++count;
