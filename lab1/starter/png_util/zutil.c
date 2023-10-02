@@ -35,7 +35,6 @@ int mem_def(U8 *dest, U64 *dest_len, U8 *source,  U64 source_len, int level)
     int have = 0;     /* amount of data returned from deflate() */
     int def_len = 0;  /* accumulated deflated data length       */
     U8 *p_dest = dest;/* first empty slot in dest buffer        */
-
     
     strm.zalloc = Z_NULL;
     strm.zfree  = Z_NULL;
@@ -92,8 +91,8 @@ int mem_inf(U8 *dest, U64 *dest_len, U8 *source,  U64 source_len)
     int have = 0;     /* amount of data returned from inflate() */
     int inf_len = 0;  /* accumulated inflated data length       */
     U8 *p_dest = dest;/* first empty slot in dest buffer        */
-
-    /* allocate inflate state 8 */
+    
+	/* allocate inflate state 8 */
     strm.zalloc = Z_NULL;
     strm.zfree = Z_NULL;
     strm.opaque = Z_NULL;
@@ -103,8 +102,8 @@ int mem_inf(U8 *dest, U64 *dest_len, U8 *source,  U64 source_len)
     if (ret != Z_OK) {
         return ret;
     }
-
-    /* set input data stream */
+    
+	/* set input data stream */
     strm.avail_in = source_len;
     strm.next_in = source;
 
@@ -115,7 +114,7 @@ int mem_inf(U8 *dest, U64 *dest_len, U8 *source,  U64 source_len)
 
         /* zlib format is self-terminating, no need to flush */
         ret = inflate(&strm, Z_NO_FLUSH);
-        assert(ret != Z_STREAM_ERROR);    /* state no t clobbered */
+        assert(ret != Z_STREAM_ERROR);    /* state not clobbered */
         switch(ret) {
         case Z_NEED_DICT:
             ret = Z_DATA_ERROR;  /* and fall through */
@@ -125,7 +124,7 @@ int mem_inf(U8 *dest, U64 *dest_len, U8 *source,  U64 source_len)
 			return ret;
         }
         have = CHUNK - strm.avail_out;
-        memcpy(p_dest, out, have);
+		memcpy(p_dest, out, have);
         p_dest += have;  /* advance to the next free byte to write */
         inf_len += have; /* increment inflated data length         */
     } while (strm.avail_out == 0 );
