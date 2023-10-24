@@ -235,9 +235,11 @@ No executable found +1
 
 ########### Score ###########
 Makefile score: 5/5
-findpng score: 10/35
+findpng score: 35/35
 catpng score: 50/50
 file organization: 10/10
-Total lab 1 score:  75/100
+Total lab 1 score:  100/100
 
 ########### Additional Comments ###########
+Remarked by MM
+Extra label confused the marking script
