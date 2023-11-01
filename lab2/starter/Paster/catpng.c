@@ -119,9 +119,11 @@ int catpng(RECV_BUF** recv_data_arr, unsigned n) {
 
 
 	for (int i = 0; i < n; i++)
-		if (data_len_arr[i] && data_arr[i])
-				decompressed_len += data_len_arr[i];
-
+		if (data_len_arr[i] && data_arr[i]){
+			decompressed_len += data_len_arr[i];
+			printf("PNG i: %d, len: %d", i, data_len_arr[i]);
+		}
+	printf("Decompressed Lenght *** %u\n", decompressed_len);
 
 	decompressed_data = (char*)malloc(decompressed_len*sizeof(char) + 1);
 	if (!decompressed_data) { printf("Malloc Err\n"); return -1; }
