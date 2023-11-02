@@ -2,6 +2,8 @@ COMPILER = gcc
 COMPILER_FLAGS = -Wall -g -std=c99 -c -D_GNU_SOURCE
 LINKER = gcc -pthread
 
+#======== Valgrind ========
+# valgrind --leak-check=yes --log-file=valgrind.rpt ./
 
 #======== for "make all" =========================================================================
 all: paster2.out #all executables should be listed here

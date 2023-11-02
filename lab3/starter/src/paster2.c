@@ -50,10 +50,10 @@ int shm_total_count_id;
 int shm_count_id;
 int shm_producer_count_id;
 int shm_consumer_count_id;
+int shm_server_num_id;
 
 unsigned count_sleep;
 unsigned image_num;
-unsigned server_num;
 
 int main(int argc, char** argv) {
 	struct timespec start, end;
@@ -66,12 +66,11 @@ int main(int argc, char** argv) {
 	unsigned count_consumers = atoi(argv[3]);
 	count_sleep = atoi(argv[4]);
 	image_num = atoi(argv[5]);
-	server_num = 1; // Ask Maran
 
 	// Check inputs // Ask Maran upper limit
 	if (count_stack_max <= 0 || count_producers <= 0 || count_consumers <= 0 ||
-				count_sleep < 0 || image_num <= 0 || image_num > 3 ||
-				server_num <= 0 || server_num > 3) {
+				count_sleep < 0 || image_num <= 0 || image_num > 3)
+	{
 		printf("Incorrect Args\n");
 		return -1;
 	}
@@ -126,19 +125,21 @@ int main(int argc, char** argv) {
                           IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
 	shm_consumer_count_id = shmget(IPC_PRIVATE, sizeof(atomic_uint),
                           IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
-	
+	shm_server_num_id = shmget(IPC_PRIVATE, sizeof(atomic_uint),
+			 		 	  IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
 	// Get Atomic Pointers
 		//atomic_uint* p_total_count = (atomic_uint*)shmat(shm_total_count_id, NULL, 0);
 	atomic_uint* p_count = (atomic_uint*)shmat(shm_count_id, NULL, 0);
 	atomic_uint* p_producer_count = (atomic_uint*)shmat(shm_producer_count_id, NULL, 0);
 	atomic_uint* p_consumer_count = (atomic_uint*)shmat(shm_consumer_count_id, NULL, 0);
-	
+	atomic_uint* p_server_num = (atomic_uint*)shmat(shm_server_num_id, NULL, 0);
+
 	// Initialize Atomic Variables
 		//atomic_store(p_total_count, 0);
 	atomic_store(p_count, 0);
 	atomic_store(p_producer_count, 0);
 	atomic_store(p_consumer_count, 0);
-
+	atomic_store(p_server_num, 0);
 
 	//atomic_uint* p_png_count = (atomic_uint*)shmat(shm_png_count_id, NULL, 0);
 	//atomic_store(p_png_count, 0);
@@ -213,7 +214,8 @@ int main(int argc, char** argv) {
 	shmctl(shm_count_id, IPC_RMID, NULL);
 	shmctl(shm_producer_count_id, IPC_RMID, NULL);
 	shmctl(shm_consumer_count_id, IPC_RMID, NULL);
-	
+	shmctl(shm_server_num_id, IPC_RMID, NULL);
+
 	clock_gettime(CLOCK_MONOTONIC, &end);
 	double elapsed_time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
     printf("paster2 execution time: %.6lf seconds\n", elapsed_time);
@@ -311,13 +313,17 @@ void consumer() {
 }
 
 RECV_BUF* get_png(unsigned png_number) {
+	atomic_uint* p_server_num = (atomic_uint*)shmat(shm_server_num_id, NULL, 0);
+	unsigned server_num = atomic_fetch_add(p_server_num, 1);
 	char IMG_URL[] = "http://ece252-1.uwaterloo.ca:2530/image?img=1&part=00";
 	CURL* curl_handle;
 	CURLcode res;
 	RECV_BUF* p_recv_buf;
 
 __get_png_start:
-	IMG_URL[14] = server_num + '0';
+	printf("Server: %u\n", (server_num % 3) + 1);
+	IMG_URL[14] = (server_num % 3) + 1 + '0';
+	++server_num;
 	IMG_URL[44] = image_num + '0';
 	IMG_URL[51] = (png_number / 10) + '0';
 	IMG_URL[52] = (png_number % 10) + '0';
