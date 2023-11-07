@@ -56,6 +56,15 @@ unsigned count_sleep;
 unsigned image_num;
 
 int main(int argc, char** argv) {
+    double times[2];
+    struct timeval tv;
+
+    if (gettimeofday(&tv, NULL) != 0) {
+        perror("gettimeofday");
+        abort();
+    }
+    times[0] = (tv.tv_sec) + tv.tv_usec/1000000.;
+ 
 	struct timespec start, end;
 	clock_gettime(CLOCK_MONOTONIC, &start);
 
@@ -220,6 +229,14 @@ int main(int argc, char** argv) {
 	double elapsed_time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
     printf("paster2 execution time: %.6lf seconds\n", elapsed_time);
 
+   
+    if (gettimeofday(&tv, NULL) != 0) {
+        perror("gettimeofday");
+        abort();
+    }
+    times[1] = (tv.tv_sec) + tv.tv_usec/1000000.;
+    printf("paster2 execution time: %.6lf seconds\n", times[1] - times[0]);
+ 
 	return 0;
 }
 
