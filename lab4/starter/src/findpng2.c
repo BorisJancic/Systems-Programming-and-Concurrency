@@ -9,6 +9,7 @@
 #include <libxml/xpath.h>
 #include <libxml/uri.h>
 #include <pthread.h>
+#include <time.h>
 #include <unistd.h>
 
 #include "http_search.h"
@@ -51,6 +52,17 @@ void print_slept_thread(void){
 }
 
 int main(int argc, char** argv) {
+	double times[2];
+	struct timeval tv;
+	if (gettimeofday(&tv, NULL) != 0) {
+        perror("gettimeofday");
+        abort();
+    }
+	times[0] = (tv.tv_sec) + tv.tv_usec/1000000.;
+	struct timespec start, end;
+	clock_gettime(CLOCK_MONOTONIC, &start);
+
+
 	int c;
 	int t = 100; // ** 1 **
 	int m = 50;
@@ -191,6 +203,16 @@ int main(int argc, char** argv) {
 	xmlCleanupParser();
 	curl_global_cleanup();
 	
+	clock_gettime(CLOCK_MONOTONIC, &end);
+	double elapsed_time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
+	printf("paster2 execution time: %.6lf seconds\n", elapsed_time);
+
+	if (gettimeofday(&tv, NULL) != 0) {
+        perror("gettimeofday");
+        abort();
+    }
+    times[1] = (tv.tv_sec) + tv.tv_usec/1000000.;
+
 	return 0;
 }
 
