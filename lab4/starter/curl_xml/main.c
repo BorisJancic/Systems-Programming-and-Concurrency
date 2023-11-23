@@ -37,7 +37,7 @@
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
 #include <libxml/uri.h>
-
+#include <pthread.h>
 
 #define SEED_URL "http://ece252-1.uwaterloo.ca/lab4/"
 #define ECE252_HEADER "X-Ece252-Fragment: "
@@ -62,6 +62,12 @@ typedef struct recv_buf2 {
                      /* <0 indicates an invalid seq number */
 } RECV_BUF;
 
+typedef struct thread_arg {
+	xmlChar* href;
+	int follow_relative_links;
+	const char* base_url;
+	xmlNodeSetPtr nodeset;
+} THREAD_ARG;
 
 htmlDocPtr mem_getdoc(char *buf, int size, const char *url);
 xmlXPathObjectPtr getnodeset (xmlDocPtr doc, xmlChar *xpath);
@@ -74,7 +80,7 @@ void cleanup(CURL *curl, RECV_BUF *ptr);
 int write_file(const char *path, const void *in, size_t len);
 CURL *easy_handle_init(RECV_BUF *ptr, const char *url);
 int process_data(CURL *curl_handle, RECV_BUF *p_recv_buf);
-
+void* thread_function(void* arg);
 
 htmlDocPtr mem_getdoc(char *buf, int size, const char *url)
 {
@@ -114,10 +120,42 @@ xmlXPathObjectPtr getnodeset (xmlDocPtr doc, xmlChar *xpath)
     return result;
 }
 
-int find_http(char *buf, int size, int follow_relative_links, const char *base_url)
-{
+void* thread_function(void* p_arg) {
+	THREAD_ARG* p_input = (THREAD_ARG*)p_arg;
 
+	xmlChar* href = p_input->href;
+	int follow_relative_links = p_input->follow_relative_links;
+	const char* base_url = p_input->base_url;
+	xmlNodeSetPtr nodeset = p_input->nodeset;
+
+	if ( follow_relative_links ) {
+		xmlChar *old = href;
+		href = xmlBuildURI(href, (xmlChar *) base_url);
+		xmlFree(old);
+    }
+	if ( href != NULL && !strncmp((const char *)href, "http", 4) ) {
+		printf("href: %s\n", href);
+    }
+        
+	xmlFree(href);
+
+	printf("freed\n");
+	return NULL;
+}
+/*
+typedef struct thread_arg {
+	xmlChar* href;
+	xmlChar *old;
+	int follow_relative_links;
+	const char *base_url;
+	htmlDocPtr doc;
+	xmlNodeSetPtr nodeset;
+	int i;
+} THREAD_ARG;
+*/
+int find_http(char *buf, int size, int follow_relative_links, const char *base_url) {
     int i;
+	int n = 0;
     htmlDocPtr doc;
     xmlChar *xpath = (xmlChar*) "//a/@href";
     xmlNodeSetPtr nodeset;
@@ -132,8 +170,21 @@ int find_http(char *buf, int size, int follow_relative_links, const char *base_u
     result = getnodeset (doc, xpath);
     if (result) {
         nodeset = result->nodesetval;
-        for (i=0; i < nodeset->nodeNr; i++) {
-            href = xmlNodeListGetString(doc, nodeset->nodeTab[i]->xmlChildrenNode, 1);
+        n = nodeset->nodeNr;
+		pthread_t threads[n];
+
+		for (i=0; i < n; i++) {
+			printf("n = %d\n");
+			THREAD_ARG* p_arg;		
+
+			p_arg->href = xmlNodeListGetString(doc, nodeset->nodeTab[i]->xmlChildrenNode, 1);
+			p_arg->follow_relative_links = follow_relative_links;
+			p_arg->base_url = base_url;
+			p_arg->nodeset = nodeset;
+
+			pthread_create(&threads[i], NULL, thread_function, (void*) p_arg);
+
+		/*    href = xmlNodeListGetString(doc, nodeset->nodeTab[i]->xmlChildrenNode, 1);
             if ( follow_relative_links ) {
                 xmlChar *old = href;
                 href = xmlBuildURI(href, (xmlChar *) base_url);
@@ -142,8 +193,11 @@ int find_http(char *buf, int size, int follow_relative_links, const char *base_u
             if ( href != NULL && !strncmp((const char *)href, "http", 4) ) {
                 printf("href: %s\n", href);
             }
-            xmlFree(href);
+            xmlFree(href);*/
         }
+		for (int j = 0; j < n; j++) {
+			pthread_join(threads[i], NULL);
+		}
         xmlXPathFreeObject (result);
     }
     xmlFreeDoc(doc);
