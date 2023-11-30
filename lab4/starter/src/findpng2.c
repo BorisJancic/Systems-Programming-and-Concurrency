@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
 
 
 	int c;
-	int t = 100; // ** 1 **
+	int t = 1;
 	int m = 50;
 	char* p_v = NULL;
 	char *str = "option requires an argument";
