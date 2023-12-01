@@ -27,8 +27,8 @@ static const char *urls[] = {
 };
 #define CNT 4
 
-static size_t cb(char *d, size_t n, size_t l, void *p)
-{
+static size_t cb(char *d, size_t n, size_t l, void *p) {
+	printf("Callback()\n");
   /* take care of the data here, ignored in this example */
   (void)d;
   (void)p;

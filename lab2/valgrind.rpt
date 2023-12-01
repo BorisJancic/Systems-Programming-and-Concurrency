@@ -1,0 +1,15 @@
+==950541== Memcheck, a memory error detector
+==950541== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==950541== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==950541== Command: ./paster.out -n 1
+==950541== Parent PID: 667170
+==950541== 
+==950541== 
+==950541== HEAP SUMMARY:
+==950541==     in use at exit: 0 bytes in 0 blocks
+==950541==   total heap usage: 25,441 allocs, 25,441 frees, 276,764,718 bytes allocated
+==950541== 
+==950541== All heap blocks were freed -- no leaks are possible
+==950541== 
+==950541== For lists of detected and suppressed errors, rerun with: -s
+==950541== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

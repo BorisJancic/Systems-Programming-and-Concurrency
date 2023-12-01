@@ -4,7 +4,7 @@
 #ifndef URL_VECTOR_H
 #define URL_VECTOR_H
 
-#define MAX_SIZE 1000
+#define MAX_SIZE 2500
 
 typedef struct url_vector {
     char* urls[MAX_SIZE];

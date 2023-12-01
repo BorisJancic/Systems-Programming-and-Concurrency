@@ -21,7 +21,7 @@ pthread_mutex_t thread_mutex = PTHREAD_MUTEX_INITIALIZER;
 char IMG_URL[] = "http://ece252-1.uwaterloo.ca:2520/image?img=1";
 
 int main(int argc, char** argv) {
-	if (argc != 5) { return -1; }
+//	if (argc != 5) { return -1; }
 
 	int c;
     int t = 1;
@@ -47,7 +47,8 @@ int main(int argc, char** argv) {
             }
             break;
         default:
-            return -1;
+			continue;
+  //          return -1;
         }
     }
 	

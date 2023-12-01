@@ -1,0 +1,195 @@
+==1214163== Memcheck, a memory error detector
+==1214163== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1214163== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==1214163== Command: ./paster2.out 10 10 10 2000 1
+==1214163== Parent PID: 667170
+==1214163== 
+==1214171== 
+==1214171== HEAP SUMMARY:
+==1214171==     in use at exit: 0 bytes in 0 blocks
+==1214171==   total heap usage: 5,590 allocs, 5,590 frees, 6,119,307 bytes allocated
+==1214171== 
+==1214171== All heap blocks were freed -- no leaks are possible
+==1214171== 
+==1214171== For lists of detected and suppressed errors, rerun with: -s
+==1214171== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214167== 
+==1214167== HEAP SUMMARY:
+==1214167==     in use at exit: 0 bytes in 0 blocks
+==1214167==   total heap usage: 5,590 allocs, 5,590 frees, 6,119,307 bytes allocated
+==1214167== 
+==1214167== All heap blocks were freed -- no leaks are possible
+==1214167== 
+==1214167== For lists of detected and suppressed errors, rerun with: -s
+==1214167== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214169== 
+==1214169== HEAP SUMMARY:
+==1214169==     in use at exit: 0 bytes in 0 blocks
+==1214169==   total heap usage: 5,590 allocs, 5,590 frees, 6,119,307 bytes allocated
+==1214169== 
+==1214169== All heap blocks were freed -- no leaks are possible
+==1214169== 
+==1214169== For lists of detected and suppressed errors, rerun with: -s
+==1214169== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214165== 
+==1214165== HEAP SUMMARY:
+==1214165==     in use at exit: 0 bytes in 0 blocks
+==1214165==   total heap usage: 5,590 allocs, 5,590 frees, 6,119,307 bytes allocated
+==1214165== 
+==1214165== All heap blocks were freed -- no leaks are possible
+==1214165== 
+==1214165== For lists of detected and suppressed errors, rerun with: -s
+==1214165== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214168== 
+==1214168== HEAP SUMMARY:
+==1214168==     in use at exit: 0 bytes in 0 blocks
+==1214168==   total heap usage: 5,590 allocs, 5,590 frees, 6,119,307 bytes allocated
+==1214168== 
+==1214168== All heap blocks were freed -- no leaks are possible
+==1214168== 
+==1214168== For lists of detected and suppressed errors, rerun with: -s
+==1214168== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214172== 
+==1214172== HEAP SUMMARY:
+==1214172==     in use at exit: 0 bytes in 0 blocks
+==1214172==   total heap usage: 5,590 allocs, 5,590 frees, 6,119,307 bytes allocated
+==1214172== 
+==1214172== All heap blocks were freed -- no leaks are possible
+==1214172== 
+==1214172== For lists of detected and suppressed errors, rerun with: -s
+==1214172== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214164== 
+==1214164== HEAP SUMMARY:
+==1214164==     in use at exit: 0 bytes in 0 blocks
+==1214164==   total heap usage: 5,590 allocs, 5,590 frees, 6,119,307 bytes allocated
+==1214164== 
+==1214164== All heap blocks were freed -- no leaks are possible
+==1214164== 
+==1214164== For lists of detected and suppressed errors, rerun with: -s
+==1214164== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214170== 
+==1214170== HEAP SUMMARY:
+==1214170==     in use at exit: 0 bytes in 0 blocks
+==1214170==   total heap usage: 5,590 allocs, 5,590 frees, 6,119,307 bytes allocated
+==1214170== 
+==1214170== All heap blocks were freed -- no leaks are possible
+==1214170== 
+==1214170== For lists of detected and suppressed errors, rerun with: -s
+==1214170== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214173== 
+==1214173== HEAP SUMMARY:
+==1214173==     in use at exit: 0 bytes in 0 blocks
+==1214173==   total heap usage: 5,586 allocs, 5,586 frees, 6,118,703 bytes allocated
+==1214173== 
+==1214173== All heap blocks were freed -- no leaks are possible
+==1214173== 
+==1214173== For lists of detected and suppressed errors, rerun with: -s
+==1214173== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214166== 
+==1214166== HEAP SUMMARY:
+==1214166==     in use at exit: 0 bytes in 0 blocks
+==1214166==   total heap usage: 5,590 allocs, 5,590 frees, 6,119,307 bytes allocated
+==1214166== 
+==1214166== All heap blocks were freed -- no leaks are possible
+==1214166== 
+==1214166== For lists of detected and suppressed errors, rerun with: -s
+==1214166== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214175== 
+==1214175== HEAP SUMMARY:
+==1214175==     in use at exit: 0 bytes in 0 blocks
+==1214175==   total heap usage: 1,314 allocs, 1,314 frees, 208,329 bytes allocated
+==1214175== 
+==1214175== All heap blocks were freed -- no leaks are possible
+==1214175== 
+==1214175== For lists of detected and suppressed errors, rerun with: -s
+==1214175== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214174== 
+==1214174== HEAP SUMMARY:
+==1214174==     in use at exit: 0 bytes in 0 blocks
+==1214174==   total heap usage: 1,314 allocs, 1,314 frees, 208,978 bytes allocated
+==1214174== 
+==1214174== All heap blocks were freed -- no leaks are possible
+==1214174== 
+==1214174== For lists of detected and suppressed errors, rerun with: -s
+==1214174== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214177== 
+==1214177== HEAP SUMMARY:
+==1214177==     in use at exit: 0 bytes in 0 blocks
+==1214177==   total heap usage: 1,314 allocs, 1,314 frees, 207,973 bytes allocated
+==1214177== 
+==1214177== All heap blocks were freed -- no leaks are possible
+==1214177== 
+==1214177== For lists of detected and suppressed errors, rerun with: -s
+==1214177== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214176== 
+==1214178== 
+==1214176== HEAP SUMMARY:
+==1214176==     in use at exit: 0 bytes in 0 blocks
+==1214176==   total heap usage: 1,314 allocs, 1,314 frees, 207,396 bytes allocated
+==1214176== 
+==1214178== HEAP SUMMARY:
+==1214178==     in use at exit: 0 bytes in 0 blocks
+==1214178==   total heap usage: 1,314 allocs, 1,314 frees, 207,776 bytes allocated
+==1214178== 
+==1214176== All heap blocks were freed -- no leaks are possible
+==1214178== All heap blocks were freed -- no leaks are possible
+==1214176== 
+==1214178== 
+==1214176== For lists of detected and suppressed errors, rerun with: -s
+==1214178== For lists of detected and suppressed errors, rerun with: -s
+==1214176== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214178== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214183== 
+==1214183== HEAP SUMMARY:
+==1214183==     in use at exit: 0 bytes in 0 blocks
+==1214183==   total heap usage: 1,314 allocs, 1,314 frees, 207,969 bytes allocated
+==1214183== 
+==1214183== All heap blocks were freed -- no leaks are possible
+==1214183== 
+==1214183== For lists of detected and suppressed errors, rerun with: -s
+==1214183== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214180== 
+==1214181== 
+==1214180== HEAP SUMMARY:
+==1214180==     in use at exit: 0 bytes in 0 blocks
+==1214180==   total heap usage: 1,314 allocs, 1,314 frees, 208,672 bytes allocated
+==1214180== 
+==1214180== All heap blocks were freed -- no leaks are possible
+==1214181== HEAP SUMMARY:
+==1214181==     in use at exit: 0 bytes in 0 blocks
+==1214181==   total heap usage: 1,314 allocs, 1,314 frees, 206,683 bytes allocated
+==1214181== 
+==1214180== 
+==1214181== All heap blocks were freed -- no leaks are possible
+==1214180== For lists of detected and suppressed errors, rerun with: -s
+==1214181== 
+==1214180== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214181== For lists of detected and suppressed errors, rerun with: -s
+==1214181== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214179== 
+==1214179== HEAP SUMMARY:
+==1214179==     in use at exit: 0 bytes in 0 blocks
+==1214179==   total heap usage: 1,314 allocs, 1,314 frees, 208,300 bytes allocated
+==1214179== 
+==1214179== All heap blocks were freed -- no leaks are possible
+==1214179== 
+==1214179== For lists of detected and suppressed errors, rerun with: -s
+==1214179== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214182== 
+==1214182== HEAP SUMMARY:
+==1214182==     in use at exit: 0 bytes in 0 blocks
+==1214182==   total heap usage: 1,314 allocs, 1,314 frees, 207,931 bytes allocated
+==1214182== 
+==1214182== All heap blocks were freed -- no leaks are possible
+==1214182== 
+==1214182== For lists of detected and suppressed errors, rerun with: -s
+==1214182== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1214163== 
+==1214163== HEAP SUMMARY:
+==1214163==     in use at exit: 0 bytes in 0 blocks
+==1214163==   total heap usage: 1,310 allocs, 1,310 frees, 1,517,267 bytes allocated
+==1214163== 
+==1214163== All heap blocks were freed -- no leaks are possible
+==1214163== 
+==1214163== For lists of detected and suppressed errors, rerun with: -s
+==1214163== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -338,7 +338,7 @@ RECV_BUF* get_png(unsigned png_number) {
 	RECV_BUF* p_recv_buf;
 
 __get_png_start:
-	printf("Server: %u\n", (server_num % 3) + 1);
+//	printf("Server: %u\n", (server_num % 3) + 1);
 	IMG_URL[14] = (server_num % 3) + 1 + '0';
 	++server_num;
 	IMG_URL[44] = image_num + '0';

@@ -3,6 +3,9 @@
 bool push(URL_VECTOR* p_vec, char* p_url) {
 	if (p_vec->size >= MAX_SIZE) { 
 		printf("	MAX_SIZE Exceeded ***\n***\n***\n");
+		for (int i = 0; i < 1000; i++) {
+			printf("**\n");
+		}
 		return false;
 	}
 
