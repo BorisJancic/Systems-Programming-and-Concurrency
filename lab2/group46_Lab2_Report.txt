@@ -12,48 +12,49 @@ Any *.out renamed to *
 PART 1===================================
 
 >> ./paster
-Number of threads detected: 0
+Number of threads detected: 1
 Expected: 1 or 2
-incorrect -2
+correct +2
 Program completed successfully
-Process finished after 0 seconds
+Process finished after 45 seconds
 
 >> ./paster
 Program completed successfully
-Process finished after 0 seconds
-Average processing time for 2 runs is 0 seconds
+Process finished after 57 seconds
+Average processing time for 2 runs is 51 seconds
 Got image error = 
-compare-im6.q16: unable to open image `all.png': No such file or directory @ error/blob.c/OpenBlob/2874.
-image fails absolute error test -4
+0all.png
+images pass absolute error test +4
 
 >> ./pnginfo all.png
 Got: 
-all.png:file not found!Dimensions incorrect -2
-crc errors -2
+all.png: 400 x 300 
+Dimensions correct +2
+No crc errors +2
 
 PART 2===================================
 
 >> ./paster -n 2
-Program crashed!
+Program completed successfully
 Got image error = 
-compare-im6.q16: unable to open image `all.png': No such file or directory @ error/blob.c/OpenBlob/2874.
-image fails absolute error test -1
+119991image fails absolute error test -1
 
 >> ./pnginfo all.png
 Got: 
-all.png:file not found!Dimensions incorrect -1
-crc errors -1
+all.png: 400 x 300 
+Dimensions correct +1
+No crc errors +1
 
 >> ./paster -n 3
-Program crashed!
+Program completed successfully
 Got image error = 
-compare-im6.q16: unable to open image `all.png': No such file or directory @ error/blob.c/OpenBlob/2874.
-image fails absolute error test -1
+120000image fails absolute error test -1
 
 >> ./pnginfo all.png
 Got: 
-all.png:file not found!Dimensions incorrect -1
-crc errors -1
+all.png: 400 x 300 
+Dimensions correct +1
+No crc errors +1
 
 PART 3===================================
 
@@ -67,11 +68,11 @@ Number of threads detected: 2
 Expected: 2 or 3
 correct +2
 Program completed successfully
-run time for t = 2  is  30
-run time for t = 2  is  25
-run time for t = 2  is  30
-run time for t = 2  is  30
+run time for t = 2  is  23
+run time for t = 2  is  18
+run time for t = 2  is  32
 run time for t = 2  is  17
+run time for t = 2  is  28
 Got image error = 
 0all.png
 images pass absolute error test +1
@@ -82,17 +83,17 @@ all.png: 400 x 300
 Dimensions correct +1
 No crc errors +1
 
-Average processing time for 5 runs is 26 seconds
+Average processing time for 5 runs is 23 seconds
 
 >> ./paster -t 3 -n 1
 Number of threads detected: 3
 Expected: 3 or 4
 correct +2
 Program completed successfully
-run time for t = 3  is  26
-run time for t = 3  is  24
-run time for t = 3  is  13
-run time for t = 3  is  15
+run time for t = 3  is  21
+run time for t = 3  is  16
+run time for t = 3  is  30
+run time for t = 3  is  22
 run time for t = 3  is  20
 Got image error = 
 0all.png
@@ -104,18 +105,18 @@ all.png: 400 x 300
 Dimensions correct +1
 No crc errors +1
 
-Average processing time for 5 runs is 19 seconds
+Average processing time for 5 runs is 21 seconds
 
 >> ./paster -t 4 -n 1
 Number of threads detected: 4
 Expected: 4 or 5
 correct +2
 Program completed successfully
-run time for t = 4  is  17
-run time for t = 4  is  12
-run time for t = 4  is  11
-run time for t = 4  is  16
-run time for t = 4  is  12
+run time for t = 4  is  13
+run time for t = 4  is  23
+run time for t = 4  is  13
+run time for t = 4  is  15
+run time for t = 4  is  14
 Got image error = 
 0all.png
 images pass absolute error test +1
@@ -126,7 +127,7 @@ all.png: 400 x 300
 Dimensions correct +1
 No crc errors +1
 
-Average processing time for 5 runs is 13 seconds
+Average processing time for 5 runs is 15 seconds
 
 >> ./paster -t 5 -n 1
 Number of threads detected: 5
@@ -134,10 +135,10 @@ Expected: 5 or 6
 correct +2
 Program completed successfully
 run time for t = 5  is  12
-run time for t = 5  is  14
+run time for t = 5  is  11
+run time for t = 5  is  12
+run time for t = 5  is  10
 run time for t = 5  is  8
-run time for t = 5  is  13
-run time for t = 5  is  17
 Got image error = 
 0all.png
 images pass absolute error test +1
@@ -148,18 +149,18 @@ all.png: 400 x 300
 Dimensions correct +1
 No crc errors +1
 
-Average processing time for 5 runs is 12 seconds
+Average processing time for 5 runs is 10 seconds
 
 >> ./paster -t 6 -n 1
 Number of threads detected: 6
 Expected: 6 or 7
 correct +2
 Program completed successfully
+run time for t = 6  is  6
+run time for t = 6  is  12
 run time for t = 6  is  10
 run time for t = 6  is  8
-run time for t = 6  is  9
-run time for t = 6  is  10
-run time for t = 6  is  7
+run time for t = 6  is  8
 Got image error = 
 0all.png
 images pass absolute error test +1
@@ -177,11 +178,33 @@ Number of threads detected: 7
 Expected: 7 or 8
 correct +2
 Program completed successfully
+run time for t = 7  is  10
 run time for t = 7  is  8
+run time for t = 7  is  15
+run time for t = 7  is  10
 run time for t = 7  is  7
-run time for t = 7  is  6
-run time for t = 7  is  8
-run time for t = 7  is  14
+Got image error = 
+0all.png
+images pass absolute error test +1
+
+>> ./pnginfo all.png
+Got: 
+all.png: 400 x 300 
+Dimensions correct +1
+No crc errors +1
+
+Average processing time for 5 runs is 10 seconds
+
+>> ./paster -t 8 -n 1
+Number of threads detected: 8
+Expected: 8 or 9
+correct +2
+Program completed successfully
+run time for t = 8  is  11
+run time for t = 8  is  12
+run time for t = 8  is  6
+run time for t = 8  is  8
+run time for t = 8  is  7
 Got image error = 
 0all.png
 images pass absolute error test +1
@@ -194,38 +217,16 @@ No crc errors +1
 
 Average processing time for 5 runs is 8 seconds
 
->> ./paster -t 8 -n 1
-Number of threads detected: 8
-Expected: 8 or 9
-correct +2
-Program completed successfully
-run time for t = 8  is  9
-run time for t = 8  is  4
-run time for t = 8  is  5
-run time for t = 8  is  9
-run time for t = 8  is  6
-Got image error = 
-0all.png
-images pass absolute error test +1
-
->> ./pnginfo all.png
-Got: 
-all.png: 400 x 300 
-Dimensions correct +1
-No crc errors +1
-
-Average processing time for 5 runs is 6 seconds
-
 >> ./paster -t 9 -n 1
 Number of threads detected: 9
 Expected: 9 or 10
 correct +2
 Program completed successfully
+run time for t = 9  is  11
 run time for t = 9  is  6
+run time for t = 9  is  8
+run time for t = 9  is  5
 run time for t = 9  is  9
-run time for t = 9  is  5
-run time for t = 9  is  5
-run time for t = 9  is  7
 Got image error = 
 0all.png
 images pass absolute error test +1
@@ -236,7 +237,7 @@ all.png: 400 x 300
 Dimensions correct +1
 No crc errors +1
 
-Average processing time for 5 runs is 6 seconds
+Average processing time for 5 runs is 7 seconds
 
 >> ./paster -t 10 -n 1
 Number of threads detected: 10
@@ -245,9 +246,9 @@ correct +2
 Program completed successfully
 run time for t = 10  is  5
 run time for t = 10  is  6
+run time for t = 10  is  3
 run time for t = 10  is  6
-run time for t = 10  is  7
-run time for t = 10  is  6
+run time for t = 10  is  5
 Got image error = 
 0all.png
 images pass absolute error test +1
@@ -258,15 +259,15 @@ all.png: 400 x 300
 Dimensions correct +1
 No crc errors +1
 
-Average processing time for 5 runs is 6 seconds
+Average processing time for 5 runs is 5 seconds
 
 
 PART 5===================================
 
     # of Threads:  1  ...  10
-Processing Times: 0 26 19 13 12 8 8 6 6 6
-Observed Speedups:  0 0 0 0 0 0 0 0 0 
--t10 is less than 2x faster than -t1 -10
+Processing Times: 51 23 21 15 10 8 10 8 7 5
+Observed Speedups: 1.00 2.21 2.42 3.40 5.10 6.37 5.10 6.37 7.28 10.20 
+-t10 is at least 8x faster than -t1 +10
 
 PART 6===================================
 Testing -t100
@@ -319,8 +320,7 @@ No executable found +1
 
 File Organization score: 10/10
 Makefile score: 5/5
-paster multi-threaded score:  66/100
-Segfault Detected
-Total lab 2 score:  81/115
+paster multi-threaded score:  90/100
+Total lab 2 score:  105/115
 
 ########### Additional Comments ###########
