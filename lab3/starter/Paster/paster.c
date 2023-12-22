@@ -159,10 +159,7 @@ RECV_BUF* get_png_snippet(void) {
 	/* some servers requires a user-agent field */
 	curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
 	/* get it! */
-	while ((res = curl_easy_perform(curl_handle) != CURLE_OK) {
-		usleep(10 * 1000);
-	}
-
+	res = curl_easy_perform(curl_handle);
 	/* cleaning up */
 	curl_easy_cleanup(curl_handle);
 	/* recv_buf_cleanup(&recv_buf); */
