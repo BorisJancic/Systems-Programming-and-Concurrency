@@ -372,6 +372,7 @@ __get_png_start:
 	
 	for (int i = 0; i = 100; i++) {
 		res = curl_easy_perform(curl_handle);
+		usleep(10 * 1000);
 		if (res == CURLE_OK) {
 			break;
 		}
