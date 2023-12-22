@@ -18,6 +18,7 @@ RECV_BUF* recv_data_arr[50];
 atomic_uint png_count = ATOMIC_VAR_INIT(0);
 pthread_mutex_t thread_mutex = PTHREAD_MUTEX_INITIALIZER;
 
+int n = 1;
 char IMG_URL[] = "http://ece252-1.uwaterloo.ca:2520/image?img=1";
 
 int main(int argc, char** argv) {
@@ -25,7 +26,6 @@ int main(int argc, char** argv) {
 
 	int c;
     int t = 1;
-    int n = 1;
     char *str = "option requires an argument";
     
     while ((c = getopt (argc, argv, "t:n:")) != -1) {
@@ -60,7 +60,9 @@ int main(int argc, char** argv) {
 	if (thread_count > 500) { printf("Thread count exceeded\n"); return -1; }
 	pthread_t thread_id_arr[thread_count];
 	
-	IMG_URL[14] = (char)server_id + '0';
+	IMG_URL[44] = (char)server_id + '0';
+
+	printf("IMG_URL: %s\n", IMG_URL);
 
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 
@@ -146,6 +148,9 @@ RECV_BUF* get_png_snippet(void) {
 		free(p_recv_buf);
 	   	return NULL;
 	}
+
+	n++;
+	IMG_URL[14] = (char)(n % 3) + '1';
 
 	/* specify URL to get */
 	curl_easy_setopt(curl_handle, CURLOPT_URL, IMG_URL);
