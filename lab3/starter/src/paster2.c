@@ -370,7 +370,7 @@ __get_png_start:
 	curl_easy_setopt(curl_handle, CURLOPT_HEADERDATA, (void*)p_recv_buf);
 	curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
 	
-	for (int i = 0; i = 100; i++) {
+	for (int i = 0; i < 100; i++) {
 		res = curl_easy_perform(curl_handle);
 		usleep(10 * 1000);
 		if (res == CURLE_OK) {
