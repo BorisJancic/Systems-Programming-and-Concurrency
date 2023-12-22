@@ -369,7 +369,13 @@ __get_png_start:
 	curl_easy_setopt(curl_handle, CURLOPT_HEADERFUNCTION, header_cb_curl);
 	curl_easy_setopt(curl_handle, CURLOPT_HEADERDATA, (void*)p_recv_buf);
 	curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
-	res = curl_easy_perform(curl_handle);
+	
+	for (int i = 0; i = 100; i++) {
+		res = curl_easy_perform(curl_handle);
+		if (res == CURLE_OK) {
+			break;
+		}
+	}
 
 	/* cleaning up */
 	curl_easy_cleanup(curl_handle);
