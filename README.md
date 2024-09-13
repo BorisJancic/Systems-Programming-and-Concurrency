@@ -1,6 +1,8 @@
 # Labs for ECE 252, Systems Programming and Concurrency
 ## Made in partnership with Max Long
 
+---
+
 ## Lab 1: PNG Concatenation and Directory Search
 Validate and concatenate PNGs.
 DFS through directories to find all valid PNGs.
